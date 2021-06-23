@@ -1,6 +1,9 @@
 {
   "name": "result_poster",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.x"
+  },
   "description": "result poster for the 2021 max-a-athon",
   "main": "index.js",
   "dependencies": {
