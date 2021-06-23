@@ -48,22 +48,6 @@ app.get('/',function(req,res){
   });
 }
 let resultArray
-//  async function displayResults(name, location, journey, activity, hours, minutes, seconds, total_seconds){
-//     var resultQuery = "SELECT * FROM runners WHERE activity_type='"+activity+"' AND runner_distance='"+journey+"' ORDER BY total_seconds"
-//       con.query(resultQuery,(err, result) => {
-//       if (err) throw err;
-//       try{
-//       resultArray = JSON.parse(JSON.stringify(result));
-//       console.log(" Display Results: ");
-//       console.log(resultArray)
-      
-//       }
-//       catch (error){
-        
-//         throw error;
-//       }
-//     }) 
-// }
 function dbConnection(){
   app.post('/',function(req,res){
     HTML = req.body.formHTML;
@@ -75,18 +59,8 @@ function dbConnection(){
     var minutes = req.body.minutes;
     var seconds = req.body.seconds;
     var total_seconds = +req.body.seconds+(+req.body.hours*3600)+(+req.body.minutes*60);
-    console.log(total_seconds)
+    console.log("time:"+hours+":"+minutes+":"+seconds)
   var moment = require('moment');
-  var dateTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-    // res.write('You sent the name "' + req.body.name+'".\n');
-    // res.write('You sent the location "' + req.body.location+'".\n');
-    // res.write('You sent the journey length "' + req.body.journey+'".\n');
-    // res.write('You sent the activity "' + req.body.activity+'".\n');
-    // res.write('You sent the hours "' + req.body.hours+'".\n');
-    // res.write('You sent the minutes "' + req.body.minutes+'".\n');
-    // res.write('You sent the seconds "' + req.body.seconds+'".\n');
-    // res.write('You sent total seconds "' +total_seconds+'".\n');
-
     con.connect(function(err) {
        postResult(name, location, journey, activity, hours, minutes, seconds, total_seconds)
     if (err) throw err;
@@ -95,27 +69,29 @@ function dbConnection(){
       setTimeout(function(){con.query(resultQuery,(err, result) => {
       if (err) throw err;
       try{
-      resultArray = JSON.parse(JSON.stringify(result));
-      console.log(" Display Results: ");
-      console.log(resultArray)
-      
-      }
-      catch (error){
-        
-        throw error;
-      }
-    console.log("Result Array??")
-    console.log(resultArray)
-    // let newEntry = [name, location, journey, activity, hours, minutes, seconds, total_seconds]
-    // for(i=0; i < resultArray.length; i++){
-    //   if(total_seconds < resultArray[i].total_seconds){
-    //     resultArray.splice(i, 0, newEntry)
-    //   }
-    // }
-    res.send(resultArray.map(entry =>
-      `<p>${entry.runner_name}</p><p>${entry.runner_location}</p>`
+        resultArray = JSON.parse(JSON.stringify(result));
+        }
+        catch (error){
+          throw error;
+        }
+    
+      for(i=0; i < resultArray.length; i++){
+        if(parseInt(resultArray[i].hours,10)<10){
+          resultArray[i].hours ='0'+resultArray[i].hours;
+          }
+        if(parseInt(resultArray[i].minutes,10)<10){
+        resultArray[i].minutes ='0'+resultArray[i].minutes;
+          }
+        if(parseInt(resultArray[i].seconds,10)<10){
+        resultArray[i].seconds ='0'+resultArray[i].seconds;
+          }
+        }
 
-    ).join('')
+    
+    res.send(`<h1>2021 Max-a-thon Results</h1><table><tr><th>Name</th><th>location</th><th>Distance</th><th>Activity</th><th>Time</th></tr>`+resultArray.map(entry =>
+      `<tr><td>${entry.runner_name} </td><td>${entry.runner_location}</td><td>${entry.runner_distance} Miles</td><td>${entry.activity_type}</td><td>${entry.hours}:${entry.minutes}:${entry.seconds}</td></tr>`
+
+    ).join('')+`</table>`
     )
       })
     },10)

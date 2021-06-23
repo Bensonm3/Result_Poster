@@ -8,7 +8,7 @@
 
       <form class='' action="http://localhost:3000/search"  method="post">
       <b>Search Through Email-id</b><br>
-        <input type="email" id="emailIs" required="True" name="emailIs"><br>
+        <input type="text" id="updateName" name="updateName"><br>
       <button type="submit" required="True" value="submit" name="submit">Submit</button>
       <br>
     </form>
@@ -17,7 +17,7 @@
       <br>
       <br>
       <b>Log your Journey!</b><br>
-      <form class="" action="http://localhost:3000/" method="post">
+      <form id="formHTML" name="formHTML" class="" action="http://localhost:3000/" method="post">
         Name:<br>
         <input type="text" id="name" required="True" name="name">
         <br><br>
@@ -39,9 +39,9 @@
         </select>
         <br><br>
         Time:<br>
-        <input type="number" id="hours" required="True" min='0' max='23' name="hours">Hours
-        <input type="number" id="minutes" required="True" min='0' max='59' name="minutes">Minutes
-        <input type="number" id="seconds" required="True" min='0' max='59' name="seconds">Seconds
+        <input type="number" id="hours" required="True" min='0' max='23' name="hours" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;">Hours
+        <input type="number" id="minutes" required="True" min='0' max='59' name="minutes" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;">Minutes
+        <input type="number" id="seconds" required="True" min='0' max='59' name="seconds" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;">Seconds
         <br><br>
         Location:
         <br>
