@@ -3,23 +3,26 @@ var app     = express();
 var path    = require("path");
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
-let HTML;
-
+var PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "@Bensmat08",
-  database: "runners_db"
-});
+if(process.env.JAWSDB_URL){
+  connection = mysql.createConnection(process.env.JAWSDB_URL); 
+  } else {
+      connection = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "@Bensmat08",
+      database: "runners_db"
+});}
+// connection.connect();
 app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/index.html'));
 });
  async function postResult(name, location, journey, activity, hours, minutes, seconds, total_seconds){
   var sql = "INSERT INTO runners (runner_name, runner_location,runner_distance,activity_type,hours,minutes,seconds,total_seconds) VALUES ('"+name+"', '"+location+"','"+journey+"', '"+activity+"','"+hours+"','"+minutes+"','"+seconds+"','"+total_seconds+"')";
-  con.query(sql, function (err, result) {
+  connection.query(sql, function (err, result) {
   //     displayResults(name, location, journey, activity, hours, minutes, seconds, total_seconds,function(result){
   //     console.log("Posted Result")
   //     console.log(result)
@@ -61,12 +64,12 @@ function dbConnection(){
     var total_seconds = +req.body.seconds+(+req.body.hours*3600)+(+req.body.minutes*60);
     console.log("time:"+hours+":"+minutes+":"+seconds)
   var moment = require('moment');
-    con.connect(function(err) {
+    connection.connect(function(err) {
        postResult(name, location, journey, activity, hours, minutes, seconds, total_seconds)
     if (err) throw err;
     });
     var resultQuery = "SELECT * FROM runners WHERE activity_type='"+activity+"' AND runner_distance='"+journey+"' ORDER BY total_seconds"
-      setTimeout(function(){con.query(resultQuery,(err, result) => {
+      setTimeout(function(){connection.query(resultQuery,(err, result) => {
       if (err) throw err;
       try{
         resultArray = JSON.parse(JSON.stringify(result));
@@ -98,5 +101,6 @@ function dbConnection(){
   });
   };
   dbConnection();
-app.listen(3000);
-console.log("Running at Port 3000");
+  app.listen(PORT, function() {
+    console.log("App now listening at localhost:" + PORT);
+  });
