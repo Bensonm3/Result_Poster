@@ -3,7 +3,7 @@ var app     = express();
 var path    = require("path");
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
-const PORT = process.env.PORT || 3000;
+const PORT = 
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -101,6 +101,6 @@ function dbConnection(){
   });
   };
   dbConnection();
-  app.listen(PORT, function() {
+  app.listen(process.env.PORT || 3000, function() {
     console.log("App now listening at localhost:" + PORT);
   });
