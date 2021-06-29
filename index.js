@@ -15,7 +15,7 @@ if(process.env.JAWSDB_URL){
       password: "@Bensmat08",
       database: "runners_db"
 });}
-app.get('/',function(req,res){
+app.get('/results',function(req,res){
   res.sendFile(path.join(__dirname+'/index.html'));
 });
  async function postResult(name, location, journey, activity, hours, minutes, seconds, total_seconds){
@@ -50,7 +50,7 @@ app.get('/',function(req,res){
 }
 let resultArray
 function dbConnection(){
-  app.post('/',function(req,res){
+  app.post('/results',function(req,res){
     HTML = req.body.formHTML;
     var name=req.body.name;
     var location=req.body.location;
