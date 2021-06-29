@@ -46,12 +46,7 @@ async function postResult(name, location, journey, activity, hours, minutes, sec
             res.end();
           }
     }
-    
-    // for(i=0; i < resultList.length; i++){
-    //   res.write("| Name: "+resultList.runner_name+"| Location: "+resultList.runner_location+"| Distance: "+resultList.runner_distance+"| Activity: "+resultList.activity_type+"| Time: "+resultList.hours+":"+resultList.minutes+":"+resultList.seconds+" |")
-    // }
       console.log("1 record inserted");
-      //  res.end();
     });
   }
 
@@ -68,7 +63,6 @@ function dbConnection(){
     var seconds = req.body.seconds;
     var total_seconds = +req.body.seconds+(+req.body.hours*3600)+(+req.body.minutes*60);
     console.log("time:"+hours+":"+minutes+":"+seconds)
-  var moment = require('moment');
     connection.connect(function(err) {
        postResult(name, location, journey, activity, hours, minutes, seconds, total_seconds)
     if (err) throw err;
@@ -99,7 +93,7 @@ function dbConnection(){
     res.send(`<h1>2021 Max-a-thon Results</h1><table><tr><th>Name</th><th>Location</th><th>Distance</th><th>Activity</th><th>Time</th></tr>`+resultArray.map(entry =>
       `<tr><td>${entry.runner_name} </td><td>${entry.runner_location}</td><td>${entry.runner_distance} Miles</td><td>${entry.activity_type}</td><td>${entry.hours}:${entry.minutes}:${entry.seconds}</td></tr>`
 
-    ).join('')+`</table>`
+    ).join('')+`<button id="submit" action="/" method="get" type="submit" required="True" value="submit" name="return">Return</button></table>`
     )
       })
     },100)

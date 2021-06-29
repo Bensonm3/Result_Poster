@@ -6,41 +6,43 @@
     <title>Max-a-thon Result Poster</title>
   </head>
   <body>
-      <div id="formContainer">
-        <b>Log your Journey!</b><br>
-        <form id="formHTML" name="formHTML" class="" action="/results" method="post">
-            Name:<br>
-            <input type="text" id="name" required="True" name="name">
-            <br><br>
-            <label for="journey">Choose a Journey:</label>
-            <br>
-            <select name="journey" id="journey">
-                <option value="15">Tony's Journey (15 Miles)</option>
-                <option value="30">Kailash's Journey (30 miles)</option>
-                <option value="135">Ebrima's Journey (135 miles)</option>
-            </select>
-            <br><br>
-            <label for="activity">Activity Type:</label>
-            <br>
-            <select name="activity" id="activity">
-                <option value="Run">Run</option>
-                <option value="Walk">Walk</option>
-                <option value="Bike">Bike</option>
-                <option value="Swim">Swim</option>
-            </select>
-            <br><br>
-            Time:<br>
-            <input type="number" id="hours" required="True" min='0' max='23' name="hours">Hours
-            <input type="number" id="minutes" required="True" min='0' max='59' name="minutes">Minutes
-            <input type="number" id="seconds" required="True" min='0' max='59' name="seconds">Seconds
-            <br><br>
-            Location:
-            <br>
-            <input type="text" id="location" required="True" name="location">
-            <br>
-            <br>
-            <button type="submit" required="True" value="submit" name="submit">Submit</button>
-        </form>
+      <div id bodyContainer>
+        <div id="formContainer">
+            <b>Log your Journey!</b><br>
+            <form id="formHTML" name="formHTML" class="" action="/results" method="post">
+                Name:<br>
+                <input type="text" id="name" required="True" name="name">
+                <br><br>
+                <label for="journey">Choose a Journey:</label>
+                <br>
+                <select name="journey" id="journey">
+                    <option value="15">Tony's Journey (15 Miles)</option>
+                    <option value="30">Kailash's Journey (30 miles)</option>
+                    <option value="135">Ebrima's Journey (135 miles)</option>
+                </select>
+                <br><br>
+                <label for="activity">Activity Type:</label>
+                <br>
+                <select name="activity" id="activity">
+                    <option value="Run">Run</option>
+                    <option value="Walk">Walk</option>
+                    <option value="Bike">Bike</option>
+                    <option value="Swim">Swim</option>
+                </select>
+                <br><br>
+                Time:<br>
+                <input type="number" id="hours" required="True" min='0' max='23' name="hours">Hours
+                <input type="number" id="minutes" required="True" min='0' max='59' name="minutes">Minutes
+                <input type="number" id="seconds" required="True" min='0' max='59' name="seconds">Seconds
+                <br><br>
+                Share Where You Were (City, State, Country):
+                <br>
+                <input type="text" id="location" required="True" name="location">
+                <br>
+                <br>
+                <button id="submit" type="submit" required="True" value="submit" name="submit">Submit</button>
+            </form>
+        </div>
     </div>
   </body>
 </html>
