@@ -3,7 +3,6 @@ var app     = express();
 var path    = require("path");
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
-const PORT = 
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -16,7 +15,6 @@ if(process.env.JAWSDB_URL){
       password: "@Bensmat08",
       database: "runners_db"
 });}
-// connection.connect();
 app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/index.html'));
 });
