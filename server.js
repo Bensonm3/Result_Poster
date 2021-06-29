@@ -96,13 +96,13 @@ function dbConnection(){
         }
 
     
-    res.send(`<h1>2021 Max-a-thon Results</h1><table><tr><th>Name</th><th>location</th><th>Distance</th><th>Activity</th><th>Time</th></tr>`+resultArray.map(entry =>
+    res.send(`<h1>2021 Max-a-thon Results</h1><table><tr><th>Name</th><th>Location</th><th>Distance</th><th>Activity</th><th>Time</th></tr>`+resultArray.map(entry =>
       `<tr><td>${entry.runner_name} </td><td>${entry.runner_location}</td><td>${entry.runner_distance} Miles</td><td>${entry.activity_type}</td><td>${entry.hours}:${entry.minutes}:${entry.seconds}</td></tr>`
 
     ).join('')+`</table>`
     )
       })
-    },10)
+    },100)
   });
   };
   dbConnection();
