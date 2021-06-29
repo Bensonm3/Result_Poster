@@ -107,5 +107,5 @@ function dbConnection(){
   };
   dbConnection();
   app.listen(port, function() {
-    console.log("App now listening at localhost:" + PORT);
+    console.log("App now listening at localhost:" + port);
   });
