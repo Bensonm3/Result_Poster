@@ -7,11 +7,16 @@ var bodyParser = require('body-parser');
 
 // the __dirname is the current directory from where the script is running
 app.use(express.static(__dirname));
-
+function goBack(){
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'index.html'));
+        
+      });
+}
 // send the user to index html page inspite of the url
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'index.html'));
-  console.log("listening to server.js file")
+  
 });
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -27,19 +32,11 @@ if(process.env.JAWSDB_URL){
 async function postResult(name, location, journey, activity, hours, minutes, seconds, total_seconds){
     var sql = "INSERT INTO runners (runner_name, runner_location,runner_distance,activity_type,hours,minutes,seconds,total_seconds) VALUES ('"+name+"', '"+location+"','"+journey+"', '"+activity+"','"+hours+"','"+minutes+"','"+seconds+"','"+total_seconds+"')";
     connection.query(sql, function (err, result) {
-    //     displayResults(name, location, journey, activity, hours, minutes, seconds, total_seconds,function(result){
-    //     console.log("Posted Result")
-    //     console.log(result)
-    //  });
      console.log("write Results: ")
         console.log(result);
-      if(err){  //we make sure theres an error (error obj)
-  
-            if(err.errno==1062){
-  
-  
+      if(err){ 
+        if(err.errno==1062){
             throw err;
-  
         }
             else{
                 throw err;
@@ -88,12 +85,11 @@ function dbConnection(){
         resultArray[i].seconds ='0'+resultArray[i].seconds;
           }
         }
-
     
-    res.send(`<h1>2021 Max-a-thon Results</h1><table><tr><th>Name</th><th>Location</th><th>Distance</th><th>Activity</th><th>Time</th></tr>`+resultArray.map(entry =>
+    res.send(`<h1>2021 Max-a-thon Results</h1><h2>`+journey+" Mile "+activity+`</h2><h3>`+"&#127939"+`</h3><table><tr><th>Name</th><th>Location</th><th>Distance</th><th>Activity</th><th>Time</th></tr>`+resultArray.map(entry =>
       `<tr><td>${entry.runner_name} </td><td>${entry.runner_location}</td><td>${entry.runner_distance} Miles</td><td>${entry.activity_type}</td><td>${entry.hours}:${entry.minutes}:${entry.seconds}</td></tr>`
 
-    ).join('')+`<button id="submit" action="/" method="get" type="submit" required="True" value="submit" name="return">Return</button></table>`
+    ).join('')+`<button id="submit" action="*" method="get" type="submit" required="True" value="submit" onclick="goBack()" name="submit">Return</button></table>`
     )
       })
     },100)
